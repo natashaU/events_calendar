@@ -27,20 +27,21 @@ class App extends Component {
   }
 
 
-makeEventDiv(data,id){
-  let day_events = data[id]
-  if(day_events){
-    for (let obj of day_events){
-      <div className="event-div"><p>{obj.start_time}, {obj.end_time}, {obj.description}</p></div>
-    }
-  }
-}
+
 /*componentDidMount(){
   console.log('im mounting')
-  axios.get('http://localhost:3001/events?day_id=2')
+  axios.get('http://localhost:3001/events', {
+    params: {
+      day_id: 1
+    }
+  })
 
   .then(res => {
-    console.log(res.data.data)
+    console.log('im mounting')
+    var hello = res.data.data
+    for (var obj of hello) {
+      console.log(obj.description)
+    }
   })
 }*/
 
@@ -138,9 +139,10 @@ onClose() {
           eventsData: {[day_id]:[sortedEvents]}
         })
         //}
-
+      //  ** end last then **
       }).catch(err=>console.log(err))
-        //console.log(sortedEvents + "  endofSorted yay")})
+
+
 
 
 

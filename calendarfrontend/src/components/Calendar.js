@@ -10,30 +10,55 @@ import React, { Component } from 'react';
 
 class Calendar extends Component {
 
-makeEventDiv(data,id){
+/*makeEventDiv(data,id){
+  let children = [];
   let day_events = data[id]
   if(day_events){
     for (let obj of day_events){
-      return <div className="event-div"><p>{obj.start_time}, {obj.end_time}, {obj.description}</p></div>
+      children.push(<div className="event-div"><p>{obj.start_time} {obj.end_time} {obj.description}</p></div>)
     }
   }
+  return children
+}*/
+
+ addEventList(i) {
+  var dayData = this.props.eventsData[i]
+  if (this.props.eventsData[i]) {
+    let eventsArr = [];
+    for (let obj of dayData) {
+      var eventStr= "";
+      eventStr = obj.start_time + "-" + obj.end_time + " " + obj.description;
+      eventsArr.push(eventStr)
+    }
+
+    eventsArr.map((event, i) => {
+      <div className="event-list">{event}</div>
+    })
+    return eventsArr
+  } else {
+    return <div>nothing here bro</div>
+  }
+
+  /*if (hello) {
+    console.log(hello)
+  } else {
+    console.log('nay')
+  }*/
 }
+
 
 
   makeWeek(start,end) {
     let firstWeek = [];
     for (let i=start;i<=end;i++) {
       firstWeek.push(<div  key={i} onClick={()=>{this.props.handleClick({i})
-
-
       }}//keep this // end of onClick
       className="day">{i}
-
-
-
+      {this.addEventList(i)}
 
 
       </div>)
+
 
 
     }
@@ -43,6 +68,7 @@ makeEventDiv(data,id){
 
 
   render() {
+
 
     return (
       <div className="App">
@@ -63,7 +89,10 @@ makeEventDiv(data,id){
           {this.makeWeek(1,7)}
           </div>
           <div className="flex row-container">
-            <div onClick={()=>{this.props.handleClick()}} className="day">08</div>
+            <div onClick={()=>{this.props.handleClick(8)}}
+            className="day">08
+
+            </div>
             <div onClick={()=>{alert("You clicked this day: Day 09" )}} className="day">09</div>
             <div onClick={()=>{alert("You clicked this day: Day 10" )}} className="day">10</div>
             <div onClick={()=>{alert("You clicked this day: Day 11" )}} className="day">11</div>
