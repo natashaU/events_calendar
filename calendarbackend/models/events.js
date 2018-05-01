@@ -4,7 +4,10 @@ const db = require("../db/config")
 module.exports = {
 
   findAll() {
-    return db.query(`SELECT * FROM events`);
+    return db.query(`
+    SELECT * FROM events
+    ORDER BY day_id, start_time`);
+    ;
   },
 
 

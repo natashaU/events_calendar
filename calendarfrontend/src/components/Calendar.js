@@ -15,15 +15,29 @@ class Calendar extends Component {
       eventStr = obj.start_time + "-" + obj.end_time + " " + obj.description;
       eventsArr.push(eventStr)
     }
-    eventsArr.map((event, i) => {
-      <div className="event-list">{event}</div>
+    var allEvents = eventsArr.map((event, i) => {
+      return <p key={i} className="eventdiv">{event}</p>
     })
-     return eventsArr
+     return allEvents
   } else {
     return
   }
 }
 
+
+/*makeWeek(start,end) {
+    let firstWeek = [];
+    for (let i=start;i<=end;i++) {
+      firstWeek.push(i)
+    }
+  firstWeek = firstWeek.map((num, i) => {
+    return <div  key={num} onClick={()=>{this.props.handleClick({num})
+      }} className="day">{num}
+      {this.addEventList(num)}
+      </div>
+  })
+  return firstWeek
+  }*/
 
   makeWeek(start,end) {
     let firstWeek = [];
@@ -33,7 +47,7 @@ class Calendar extends Component {
       {this.addEventList(i)}
       </div>)
     }
-    return firstWeek
+   return firstWeek
   }
 
 

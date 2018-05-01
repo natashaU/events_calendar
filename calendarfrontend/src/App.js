@@ -22,6 +22,37 @@ class App extends Component {
 
 
 
+  async componentDidMount() {
+    try {
+      const allData = await axios.get('http://localhost:3001/events/')
+      const dataArr = allData.data.events
+
+      const eventsObj = {}
+
+      const makeEventsObj = await (() => {
+        for (let obj of dataArr) {
+          if (!eventsObj[obj.day_id]){
+            eventsObj[obj.day_id] = [obj]
+          } else {
+            let old_val = eventsObj[obj.day_id];
+            eventsObj[obj.day_id] = old_val.concat(obj)
+          }
+      }})
+
+      makeEventsObj()
+
+      this.setState({
+        eventsData: eventsObj
+      })
+
+    } catch (error) {
+        console.log(error);
+      }
+
+  } // end component did mount
+
+
+
 async handleClick(event) {
   var day_id = event.i
 
@@ -47,7 +78,7 @@ onClose() {
       showForm: false
     })
 
-    axios.post('http://localhost:3001/events', {
+    await axios.post('http://localhost:3001/events', {
     start_time: start_time,
     end_time: end_time,
     description: description,
@@ -65,6 +96,7 @@ onClose() {
 
 
     } else {
+      console.log('im in else')
       let getEvents = await axios.get('http://localhost:3001/events/'+current_day);
       this.setState(prevState => ({
         eventsData: {

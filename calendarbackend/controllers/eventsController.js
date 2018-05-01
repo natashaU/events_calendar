@@ -7,8 +7,7 @@ module.exports = {
     events.findAll()
      .then(events => {
        res.json({
-        message: 'ok',
-        data: { events },
+        events
        });
       })
       .catch(err => {
