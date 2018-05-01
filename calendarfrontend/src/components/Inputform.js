@@ -7,7 +7,7 @@ class Inputform extends Component {
     if (!this.props.showForm) {
       return null;
     }
-    console.log(this.props.day_id)
+
 
     return (
       <div className="modal">
@@ -39,7 +39,6 @@ class Inputform extends Component {
               name="end_time"
               required
               />
-
 
 
           <button id="submit" className="btnform">Save!</button>

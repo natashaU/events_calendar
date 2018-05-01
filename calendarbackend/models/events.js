@@ -7,14 +7,6 @@ module.exports = {
     return db.query(`SELECT * FROM events`);
   },
 
-   /*findById(day_id) {
-    return db.many(`
-      SELECT * FROM events
-      WHERE day_id = $1
-      ORDER BY start_time
-      `, day_id);
-  },*/
-
 
   findById(id) {
     console.log('were in the backend' + id)
@@ -24,6 +16,7 @@ module.exports = {
       ORDER BY start_time
       `, id);
   },
+
 
    save(event) {
     return db.one(`

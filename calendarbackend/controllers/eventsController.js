@@ -4,7 +4,6 @@ module.exports = {
 
 
   index(req, res) {
-    console.log("getting index")
     events.findAll()
      .then(events => {
        res.json({
@@ -18,13 +17,9 @@ module.exports = {
       });
     },
 
-// ERE IN CONTROLLER!!!!! { id: '2' }
 
     getDay(req, res) {
-      console.log('WERE IN CONTROLLER!!!!!', req.params)
-
       events.findById(req.params.id)
-
       .then(event => {
       res.json({
          event,
@@ -34,6 +29,7 @@ module.exports = {
         res.status(400).json({message: '400', err});
       });
     },
+
 
     create(req, res) {
     events.save({
@@ -50,7 +46,6 @@ module.exports = {
       res.status(400).json({message: '400', err});
     });
   }
-
 
 
 };
