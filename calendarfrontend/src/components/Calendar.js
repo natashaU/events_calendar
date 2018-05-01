@@ -9,19 +9,93 @@ import React, { Component } from 'react';
 
 
 class Calendar extends Component {
-
-/*makeEventDiv(data,id){
-  let children = [];
-  let day_events = data[id]
-  if(day_events){
-    for (let obj of day_events){
-      children.push(<div className="event-div"><p>{obj.start_time} {obj.end_time} {obj.description}</p></div>)
+  /*constructor(props) {
+    super(props)
+      this.state = {
+        dayView: this.props.eventsData
     }
-  }
-  return children
-}*/
 
- addEventList(i) {
+    //this.addEventList = this.addEventList.bind(this);
+    //this.makeWeek = this.makeWeek.bind(this);
+  }*/
+
+/*var day_id = this.state.currentDayId;
+        var eventsData = this.state.eventsData[day_id]
+
+        var sortedEvents= eventsData.map(obj=>{
+          var time = obj.start_time;
+
+          var hours = parseInt(time.split(':')[0]);
+          var minutes = parseInt(time.split(':')[1]);
+
+          obj.hours = hours;
+          obj.minutes = minutes;
+
+          return obj;
+        }).sort((a,b) => {
+          return (a.hours * 100 + a.minutes) - (b.hours * 100 + b.minutes);
+        });//end map function
+
+        //may need to delete this:
+        return sortedEvents
+
+
+        }) // end 2nd then
+       //.catch(err=>console.log(err))
+       // last then
+       .then((sortedEvents)=>{
+        var day_id = this.state.currentDayId
+        this.setState({
+          eventsData: {[day_id]:[sortedEvents]}
+        })
+        //}*/
+
+/*addEventList(i) {
+  var dayData = this.props.eventsData[i]
+  if (this.props.eventsData[i]) {
+    let eventsArr = [];
+
+    var sortedEvents= dayData.map(obj=>{
+          var time = obj.start_time;
+
+          var hours = parseInt(time.split(':')[0]);
+          var minutes = parseInt(time.split(':')[1]);
+
+          obj.hours = hours;
+          obj.minutes = minutes;
+
+          return obj;
+        }).sort((a,b) => {
+          return (a.hours * 100 + a.minutes) - (b.hours * 100 + b.minutes);
+        });
+
+
+
+    for (let obj of sortedEvents) {
+      var eventStr= "";
+      eventStr = obj.start_time + "-" + obj.end_time + " " + obj.description;
+      eventsArr.push(eventStr)
+    }
+
+    eventsArr.map((event, i) => {
+      <div className="event-list">{event}</div>
+    })
+
+    this.setState({
+      dayView: {[i]: [eventsArr]}
+
+    })
+
+    return this.state.dayView[i]
+  } else {
+    return <div>nothing here bro</div>
+  }*/
+
+
+
+
+
+  /*addEventList(i) {
   var dayData = this.props.eventsData[i]
   if (this.props.eventsData[i]) {
     let eventsArr = [];
@@ -31,32 +105,60 @@ class Calendar extends Component {
       eventsArr.push(eventStr)
     }
 
+
     eventsArr.map((event, i) => {
       <div className="event-list">{event}</div>
     })
-    return eventsArr
+
+     return eventsArr
   } else {
     return <div>nothing here bro</div>
   }
 
-  /*if (hello) {
-    console.log(hello)
+
+}*/
+/*for (let event of this.state.eventsData[current_day]){
+        console.log(event.description + '  in for loop')
+      }*/
+  addEventList(i) {
+  var dayData = this.props.eventsData[i]
+  if (this.props.eventsData[i]) {
+    let eventsArr = [];
+    for (let obj of dayData) {
+      var eventStr= "";
+      eventStr = obj.start_time + "-" + obj.end_time + " " + obj.description;
+      eventsArr.push(eventStr)
+    }
+
+
+    eventsArr.map((event, i) => {
+      <div className="event-list">{event}</div>
+    })
+
+     return eventsArr
   } else {
-    console.log('nay')
-  }*/
+    return <div>nothing here bro</div>
+  }
+
+
 }
 
 
 
+
+//{this.addEventList(i)} ** put under className"day">{i}
+
+//firstWeek.push(<div  key={i} onClick={()=>{this.props.handleClick({i})
+      //}}//keep this // end of onClick
   makeWeek(start,end) {
     let firstWeek = [];
     for (let i=start;i<=end;i++) {
       firstWeek.push(<div  key={i} onClick={()=>{this.props.handleClick({i})
+
+
       }}//keep this // end of onClick
       className="day">{i}
       {this.addEventList(i)}
-
-
       </div>)
 
 

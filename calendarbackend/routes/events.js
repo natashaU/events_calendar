@@ -6,8 +6,11 @@ const controller = require('../controllers/eventsController');
 eventsRouter
   .route("/")
   .get(controller.index)
-  //.get(controller.getDay)
   .post(controller.create)
-  .delete(controller.destroy);
+  //.delete(controller.destroy);
+
+  eventsRouter
+  .route("/:id")
+  .get(controller.getDay)
 
 module.exports = eventsRouter;

@@ -18,16 +18,18 @@ module.exports = {
       });
     },
 
+// ERE IN CONTROLLER!!!!! { id: '2' }
 
     getDay(req, res) {
-    events.findById(req.params.day_id)
-    .then(event => {
+      console.log('WERE IN CONTROLLER!!!!!', req.params)
+
+      events.findById(req.params.id)
+
+      .then(event => {
       res.json({
-        message: 'ok',
-        data: { event },
+         event,
       });
-    })
-    .catch(err => {
+    }).catch(err => {
         console.log(err);
         res.status(400).json({message: '400', err});
       });
@@ -47,16 +49,8 @@ module.exports = {
       console.log(err);
       res.status(400).json({message: '400', err});
     });
-  },
+  }
 
-
-   destroy(id) {
-    return db.none(`
-    DELETE
-    FROM events
-    WHERE id = $1
-    `, id);
-  },
 
 
 };

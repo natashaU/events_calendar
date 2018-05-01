@@ -30,19 +30,11 @@ class App extends Component {
 
 /*componentDidMount(){
   console.log('im mounting')
-  axios.get('http://localhost:3001/events', {
-    params: {
-      day_id: 1
-    }
-  })
+  var day_id = 1
+  //axios.get('http://localhost:3001/events/'+day_id)
+  axios.get('http://localhost:3001/events/'+day_id)
+  .then((res)=>{console.log(res.data)})
 
-  .then(res => {
-    console.log('im mounting')
-    var hello = res.data.data
-    for (var obj of hello) {
-      console.log(obj.description)
-    }
-  })
 }*/
 
 
@@ -66,7 +58,9 @@ onClose() {
 
 }
 
- handleSubmit(start_time, end_time, description) {
+ async handleSubmit(start_time, end_time, description) {
+  try  {
+    let current_day = this.state.currentDayId
   console.log('were in submit')
   console.log(start_time, end_time, description)
 
@@ -79,18 +73,79 @@ onClose() {
     description: description,
     day_id: this.state.currentDayId
   })
+    //let current_day = this.state.currentDayId
+  if (!this.state.eventsData[current_day]) {
+        this.setState(prevState => ({
+          eventsData: {
+            ...prevState.eventsData,
+            [this.state.currentDayId]: [{start_time: start_time, end_time: end_time,
+          description: description, day_id: current_day}]
+          }
+        }))
 
-  .then(res => {
 
-    //console.log(res.data.data.event.day_id);
+const cowboy = console.log('first cowboy' + this.state.eventsData)
+        await cowboy
+
+// end if statement below
+  } else {
+    let getEvents = await axios.get('http://localhost:3001/events/'+current_day);
+    this.setState(prevState => ({
+      eventsData: {
+        ...prevState.eventsData,
+        [this.state.currentDayId]: getEvents.data.event
+      }
+    }))
+    //console.log(getEvents.data.event)
+      //console.log(getEvents.data)
+
+      for (let event of this.state.eventsData[current_day]){
+        console.log(event.description + '  in for loop')
+      }
+
+
+  } // end else statement
+//console.log(getEvents.data.event)
+const howdy = await console.log('hi am here!!!!' + this.state.eventsData[2])
+        //await howdy
+
+
+
+
+
+
+
+
+  } catch (error) {
+        console.log(error);
+      }
+  // end try before catch, catch is conclusion
+
+} // end practice
+
+  /*.then(res => {
+
 
     var day_id = res.data.data.event.day_id;
     var eventInfo = res.data.data.event;
     console.log(day_id + " day id")
     console.log(eventInfo + '   eventInfofirst')
 // add the new event info to the state. Event info is an array of objects.
-// eveninfo is an object, with the key being the day_id.
-    if (!this.state.eventsData[day_id]) {
+// eveninfo is an object, with the key being the day_id.*/
+
+
+        /*if (!this.state.eventsData[day_id]) {
+      this.setState({
+        eventsData: {[day_id]: [eventInfo]}
+      })
+      } else {
+          axios.get('http://localhost:3001/events?day_id='+day_id)
+          }
+        }) // end set state
+      }// end else*/
+
+// OLD VERSION****
+    /*if (!this.state.eventsData[day_id]) {
       this.setState({
         eventsData: {[day_id]: [eventInfo]}
       })
@@ -105,10 +160,12 @@ onClose() {
       //.then(console.log(this.state.eventsData))
 
 
-      })/*.catch(err=>console.log(err)) may need this*/
+      })
   // sort the array of event objects for the clicked on day, by their
   // start times.
-      .then(()=>{
+
+  // all of this too
+      /*.then(()=>{
         var day_id = this.state.currentDayId;
         var eventsData = this.state.eventsData[day_id]
 
@@ -134,12 +191,18 @@ onClose() {
        //.catch(err=>console.log(err))
        // last then
        .then((sortedEvents)=>{
-        var day_id = this.state.currentDayId
+        var day_id = this.state.currentDayId;
+        var eventsData = {...this.state.eventsData}
+        eventsData[day_id] = sortedEvents;
         this.setState({
-          eventsData: {[day_id]:[sortedEvents]}
+          //eventsData: {[day_id]:[sortedEvents]} keep this;
+
+          eventsData
         })
         //}
       //  ** end last then **
+      console.log('here at last')
+      console.log(sortedEvents)
       }).catch(err=>console.log(err))
 
 
@@ -152,9 +215,10 @@ onClose() {
 
 
 
+
       //})// end second then
-//.catch(err=>console.log(err))
-} // end handle submit funcion
+//.catch(err=>console.log(err))*/
+//} // end handle submit funcion
 
 
 
