@@ -77,14 +77,18 @@ label {
   max-height: 150px;
   width: 30%;
   background: #eff3f9;
+
 }
 
 
 .eventdiv {
   color: #afc2ff;
-  border: 5px solid #eff3f9;
+  margin-top: 5px;
+  border-bottom: 5px solid #eff3f9;
   overflow: hidden;
   background-color: #1c233a;
+  padding: 2px;
+
 }
 
 
@@ -134,6 +138,11 @@ label {
   width: 50%;
   align-self: center;
   height: 30px;
+}
+
+input {
+  padding: 5px
+
 }
 
 .flex-outer-form li button:hover {

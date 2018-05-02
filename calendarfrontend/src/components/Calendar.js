@@ -22,7 +22,7 @@ class Calendar extends Component {
       }
         // map over events and store each string info to a div
       var allEvents = eventsArr.map((event, i) => {
-        return <div key={i} className="eventdiv">{event}</div>
+        return <p key={i} className="eventdiv">{event}</p>
         })
       return allEvents
     } else {
