@@ -126,23 +126,44 @@ label {
 
 }
 
+
+.flex-outer-form {
+  max-width: 800px;
+  margin: 0 auto;
+  /*border: 5px solid white*/
+}
+
 .flex-outer-form li {
   display: flex;
   /*flex-wrap: wrap;*/
   justify-content: center;
   /*align-items: center;*/
-  background-color: blue;
+  background-color: #7584b7;
+
+  /*border: 5px solid black;*/
+}
+
+.formheader {
+  font: "Fira Sans", "Helvetica Neue", sans-serif;
+  color: #0a1538;
 }
 
 .flex-outer-form > li > label {
-  flex: 1 0 150px;
-  max-width: 150px;
+  font: normal 18px/1.5 "Fira Sans", "Helvetica Neue", sans-serif;
+  flex: 1 0 120px;
+  max-width: 120px;
+  height: 30px;
+  /*border: 5px solid black;*/
+  align-self: center;
 }
 
 .flex-outer-form > li > input {
+  font: normal 18px/1.5 "Fira Sans", "Helvetica Neue", sans-serif;
+  font-weight: bold;
   width: 50%;
-  border: 5px solid black;
-  align-self: center
+  /*border: 5px solid black;*/
+  align-self: center;
+  height: 30px;
 }
 
 .flex-outer-form li button:hover {
@@ -190,5 +211,6 @@ form {
   width: 50%;
   height: 50%;
   justify-content: center;
-  border: 30px solid red;
+  border: 100px solid transparent;
+  /*border: 30px solid red;*/
 }

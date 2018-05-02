@@ -8,9 +8,6 @@ class Inputform extends Component {
       return null;
     }
 
-    //<div className="flex modal">
-       // <div className="formdiv">
-
 
     return (
       <div className="flex modal">
@@ -25,8 +22,8 @@ class Inputform extends Component {
             event.target.description.value,
             )}}>
               <ul className="flex-outer-form">
-                <li><h1>Add Event</h1></li>
-                <li className="description">
+                <li><h1 className="formheader">Add Event</h1></li>
+                <li>
                   <label for="Description">Description:</label>
                   <input
                   type="name"
@@ -37,7 +34,7 @@ class Inputform extends Component {
                   />
                 </li>
 
-                <li className="starttime">
+                <li>
                   <label for="start-time">Start Time:</label>
                   <input id="start_time"
                   type="time"
@@ -46,7 +43,7 @@ class Inputform extends Component {
                   />
                 </li>
 
-                <li className="endtime">
+                <li>
                   <label for="end-time">End Time:</label>
                   <input id="end_time"
                   type="time"
@@ -54,16 +51,16 @@ class Inputform extends Component {
                   required
                   />
                 </li>
+
                 <li className="btn-container">
                   <button id="submit" className="btnform">Save</button>
                   <button className="btnform" onClick={this.props.onClose}>Cancel</button>
                 </li>
             </ul>
           </form>
-
-    </div>
+      </div>
       )
+    }
   }
-}
 
 export default Inputform;
