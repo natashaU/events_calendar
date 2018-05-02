@@ -40,7 +40,6 @@ label {
 }
 .row-container {
   justify-content: space-around;
-  /*margin: 5px;*/
 }
 
 .week-container {
@@ -71,8 +70,6 @@ label {
   font-family: Arial;
   height: 150px;
   border: 1px solid white;
-  /*flex: 1 30%;*/
-  /*flex-basis: 30%;*/
   flex-grow: 1;
   margin: 10px;
   cursor: pointer;
@@ -80,35 +77,16 @@ label {
   max-height: 150px;
   width: 30%;
   background: #eff3f9;
-
 }
 
 
 .eventdiv {
   color: #afc2ff;
-
   border: 5px solid #eff3f9;
-
   overflow: hidden;
-  /*width: 100%;*/
   background-color: #1c233a;
-  /*white-space: pre;*/
-  /*display: block;*/
-
-  /*white-space: pre;*/
-  /*height: 5px;
-   flex-grow: 1;
-   background-color: black;
-   width: 5px;
-   overflow: hidden
-   width : 10%;
-   /*overflow: auto;*/
-   /*opacity: 50%;*/
 }
 
-/*.modal {
-  display:flex;
-}*/
 
 .modal {
   display: flex;
@@ -126,21 +104,15 @@ label {
 
 }
 
-
 .flex-outer-form {
   max-width: 800px;
   margin: 0 auto;
-  /*border: 5px solid white*/
 }
 
 .flex-outer-form li {
   display: flex;
-  /*flex-wrap: wrap;*/
   justify-content: center;
-  /*align-items: center;*/
   background-color: #7584b7;
-
-  /*border: 5px solid black;*/
 }
 
 .formheader {
@@ -153,7 +125,6 @@ label {
   flex: 1 0 120px;
   max-width: 120px;
   height: 30px;
-  /*border: 5px solid black;*/
   align-self: center;
 }
 
@@ -161,7 +132,6 @@ label {
   font: normal 18px/1.5 "Fira Sans", "Helvetica Neue", sans-serif;
   font-weight: bold;
   width: 50%;
-  /*border: 5px solid black;*/
   align-self: center;
   height: 30px;
 }
@@ -172,9 +142,7 @@ label {
 
 .flex-outer-form li button {
   justify-content: space-around;
-  /*margin-left: auto;*/
   padding: 8px 16px;
-  /*border: none;*/
   background: #333;
   color: #f2f2f2;
   text-transform: uppercase;
@@ -190,27 +158,9 @@ label {
   justify-content: space-around;
 }
 
-
-
-
-/*.formdiv {
-  left: 0px;
-  top: 0px;
-  right: 0px;
-  bottom: 0px;
-  z-index: 1000;
-  width: 100%;
-  height: 100%;
-  position: fixed;
-  opacity: 0.9;
-  background-color: black;
-}*/
-
-
 form {
   width: 50%;
   height: 50%;
   justify-content: center;
   border: 100px solid transparent;
-  /*border: 30px solid red;*/
 }
