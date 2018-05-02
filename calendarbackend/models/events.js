@@ -12,7 +12,6 @@ module.exports = {
 
 
   findById(id) {
-    console.log('were in the backend' + id)
     return db.many(`
       SELECT * FROM events
       WHERE day_id = $1

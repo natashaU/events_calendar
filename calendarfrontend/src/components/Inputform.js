@@ -8,10 +8,14 @@ class Inputform extends Component {
       return null;
     }
 
+    //<div className="flex modal">
+       // <div className="formdiv">
+
 
     return (
-      <div className="modal">
-        <div className='formdiv'>
+      <div className="flex modal">
+
+
           <form className="inputForm"
           onSubmit={event=>{
             event.preventDefault();
@@ -20,33 +24,43 @@ class Inputform extends Component {
             event.target.end_time.value,
             event.target.description.value,
             )}}>
-              <input
-              type="name"
-              placeholder="Event Description"
-              name="description"
-              id='description'
-              required
-              />
+              <ul className="flex-outer-form">
+                <li><h1>Add Event</h1></li>
+                <li className="description">
+                  <label for="Description">Description:</label>
+                  <input
+                  type="name"
+                  placeholder="Event Description"
+                  name="description"
+                  id='description'
+                  required
+                  />
+                </li>
 
-              <input id="start_time"
-              type="time"
-              name="start_time"
-              required
-              />
+                <li className="starttime">
+                  <label for="start-time">Start Time:</label>
+                  <input id="start_time"
+                  type="time"
+                  name="start_time"
+                  required
+                  />
+                </li>
 
-              <input id="end_time"
-              type="time"
-              name="end_time"
-              required
-              />
-
-
-          <button id="submit" className="btnform">Save!</button>
+                <li className="endtime">
+                  <label for="end-time">End Time:</label>
+                  <input id="end_time"
+                  type="time"
+                  name="end_time"
+                  required
+                  />
+                </li>
+                <li className="btn-container">
+                  <button id="submit" className="btnform">Save</button>
+                  <button className="btnform" onClick={this.props.onClose}>Cancel</button>
+                </li>
+            </ul>
           </form>
-          <button onClick={this.props.onClose}>
-              Cancel
-           </button>
-      </div>
+
     </div>
       )
   }

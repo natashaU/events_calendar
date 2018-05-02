@@ -6,6 +6,7 @@ import React, { Component } from 'react';
 class Calendar extends Component {
 
 
+
   addEventList(i) {
   var dayData = this.props.eventsData[i]
     if (this.props.eventsData[i]) {
@@ -16,7 +17,7 @@ class Calendar extends Component {
       eventsArr.push(eventStr)
     }
     var allEvents = eventsArr.map((event, i) => {
-      return <p key={i} className="eventdiv">{event}</p>
+      return <div key={i} className="eventdiv">{event}</div>
     })
      return allEvents
   } else {
@@ -25,19 +26,6 @@ class Calendar extends Component {
 }
 
 
-/*makeWeek(start,end) {
-    let firstWeek = [];
-    for (let i=start;i<=end;i++) {
-      firstWeek.push(i)
-    }
-  firstWeek = firstWeek.map((num, i) => {
-    return <div  key={num} onClick={()=>{this.props.handleClick({num})
-      }} className="day">{num}
-      {this.addEventList(num)}
-      </div>
-  })
-  return firstWeek
-  }*/
 
   makeWeek(start,end) {
     let firstWeek = [];
@@ -56,28 +44,28 @@ class Calendar extends Component {
     return (
       <div className="App">
         <div>
-          <div className="flex row-container">
-            <h3>July 1979</h3>
+          <div className="flex row-container month-container">
+            <h1>July 1979</h1>
           </div>
-          <div className='flex row-container'>
-          <div>Sun</div>
-          <div>Mon</div>
-          <div>Tue</div>
-          <div>Wed</div>
-          <div>Thu</div>
-          <div>Fri</div>
-          <div>Sat</div>
+          <div className="flex row-container day-container">
+          <div className="dayName">Sun</div>
+          <div className="dayName">Mon</div>
+          <div className="dayName">Tue</div>
+          <div className="dayName">Wed</div>
+          <div className="dayName">Thu</div>
+          <div className="dayName">Fri</div>
+          <div className="dayName">Sat</div>
           </div>
-          <div className="flex row-container">
+          <div className="flex row-container week-container">
             {this.makeWeek(1,7)}
           </div>
-          <div className="flex row-container">
+          <div className="flex row-container week-container">
             {this.makeWeek(8,14)}
           </div>
-          <div className="flex row-container">
+          <div className="flex row-container week-container">
            {this.makeWeek(15,21)}
           </div>
-          <div className="flex row-container">
+          <div className="flex row-container week-container">
             {this.makeWeek(22,28)}
           </div>
         </div>
