@@ -101,7 +101,7 @@ onClose() {
           eventsData: {
             ...prevState.eventsData, // keep all info of events intact
             // only update day_id objects
-            [this.state.currentDayId]: [{start_time: start_time, end_time: end_time,
+            [this.state.currentDayId]: [{ start_time: start_time, end_time: end_time,
           description: description, day_id: current_day}]
           }
         }))

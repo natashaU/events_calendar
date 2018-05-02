@@ -24,7 +24,7 @@ class Inputform extends Component {
               <ul className="flex-outer-form">
                 <li><h1 className="formheader">Add Event</h1></li>
                 <li>
-                  <label for="Description">Description:</label>
+                  <label>Description:</label>
                   <input
                   type="name"
                   placeholder="Event Description"
@@ -35,7 +35,7 @@ class Inputform extends Component {
                 </li>
 
                 <li>
-                  <label for="start-time">Start Time:</label>
+                  <label>Start Time:</label>
                   <input id="start_time"
                   type="time"
                   name="start_time"
@@ -44,7 +44,7 @@ class Inputform extends Component {
                 </li>
 
                 <li>
-                  <label for="end-time">End Time:</label>
+                  <label>End Time:</label>
                   <input id="end_time"
                   type="time"
                   name="end_time"

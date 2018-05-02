@@ -5,28 +5,19 @@ import React, { Component } from 'react';
 
 class Calendar extends Component {
 
-
 // create a list of all events for the day from "Events Data State", i = day_id
   addEventList(i) {
-    var dayData = this.props.eventsData[i]
-    if (this.props.eventsData[i]) { // Info for each event on the day. Convert the object
-      //format to string, to save it to the div.
+    var dayData = this.props.eventsData[i] // all events for the day
+    if (this.props.eventsData[i]) { // Info for each event on the day, if day events exists,
+    // Convert the object format to string & save it to the div.
 
-      let eventsArr = [];
-
-      // pull out info from each event object and store it in a string.
-      // Push each string format to array.
-      for (let obj of dayData) {
-        let eventStr = obj.start_time + "-" + obj.end_time + " " + obj.description;
-        eventsArr.push(eventStr)
-      }
-        // map over events and store each string info to a div
-      var allEvents = eventsArr.map((event, i) => {
-        return <p key={i} className="eventdiv">{event}</p>
+    // map over each event object to get data
+      let allEvents = dayData.map((event, i) => {
+        let id = event.id; // db id for delete request
+        let eventStr = event.start_time + "-" + event.end_time + " " + event.description;
+        return <div key={id} id={id} className="eventdiv">{eventStr}</div>
         })
-      return allEvents
-    } else {
-      return
+      return allEvents // return divs to render event list
     }
   }
 
