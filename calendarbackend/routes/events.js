@@ -4,13 +4,17 @@ const controller = require('../controllers/eventsController');
 
 
 eventsRouter
-  .route("/")
+  .route('/')
   .get(controller.index)
   .post(controller.create)
-  //.delete(controller.destroy);
+
 
   eventsRouter
-  .route("/:id")
+  .route('/:id')
   .get(controller.getDay)
+  .put(controller.update)
+  .delete(controller.destroy)
+
+
 
 module.exports = eventsRouter;

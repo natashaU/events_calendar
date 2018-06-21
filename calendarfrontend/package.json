@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "axios": "^0.18.0",
+    "font-awesome": "^4.7.0",
     "material-ui": "^1.0.0-beta.43",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
@@ -13,10 +14,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "dategen": "node dategen.js"
   },
-  //"proxy": "http://localhost:3001/",
-
   "devDependencies": {
     "eslint-config-airbnb": "^16.1.0",
     "eslint-plugin-import": "^2.11.0",

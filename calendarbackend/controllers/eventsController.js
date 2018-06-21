@@ -3,6 +3,7 @@ const events = require("../models/events");
 module.exports = {
 
 // get all events for component did mount
+
   index(req, res) {
     events.findAll() // from model
      .then(events => {
@@ -16,12 +17,15 @@ module.exports = {
       });
     },
 
+
+
     // get events for one day_id to only update the state of that day_id
     getDay(req, res) {
-      events.findById(req.params.id)
+      const id = parseInt(req.params.id)
+      events.findById(id)
       .then(event => {
       res.json({
-         event,
+        event
       });
     }).catch(err => {
         console.log(err);
@@ -44,6 +48,31 @@ module.exports = {
       console.log(err);
       res.status(400).json({message: '400', err});
     });
+  },
+
+    destroy(req,res) {
+      events.destroy(req.params.id)
+      .then(event => {
+        res.status(200).json({event});
+      })
+      .catch(err => {
+      console.log(err);
+      res.status(400).json({message: '400', err});
+    });
+  },
+
+    update(req, res ) {
+    const id = parseInt(req.params.id)
+    console.log(id, 'update controller');
+    events.update(id,req.body)
+      .then((event) => {
+        res.json({event})
+
+      })
+      .catch(err => {
+        console.log(err);
+
+      })
   }
 
 

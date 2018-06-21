@@ -7,7 +7,7 @@ module.exports = {
     return db.query(`
     SELECT * FROM events
     ORDER BY day_id, start_time`);
-    ;
+
   },
 
 
@@ -20,7 +20,7 @@ module.exports = {
   },
 
 
-   save(event) {
+  save(event) {
     return db.one(`
       INSERT INTO events
       (start_time, end_time, description, day_id)
@@ -30,12 +30,32 @@ module.exports = {
       `, event);
   },
 
-
   destroy(id) {
-    return db.none(`
-    DELETE
-    FROM events
-    WHERE id = $1
+    return db.query(`
+      DELETE FROM events
+      WHERE id = $1;
+      SELECT * FROM events
+      ORDER BY day_id, start_time
     `, id);
   },
+
+   update(id, event) {
+    return db.one(`
+      UPDATE events
+      SET
+      start_time = $/start_time/,
+      end_time = $/end_time/,
+      description = $/description/
+      WHERE id = ${id}
+      RETURNING *
+    `, event);
+  },
+
 };
+
+//start_time = ${event.start_time},
+      //end_time = ${event.end_time},
+      //description = ${event.description}
+
+
+
