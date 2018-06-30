@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import './App.css';
 import Calendar from './components/Calendar';
 import Inputform from './components/Inputform';
+import MockEvents from './models/MockEvents';
+import MonthModel from './models/MonthModel';
 import axios from "axios";
 
 
@@ -9,10 +11,15 @@ import axios from "axios";
 class App extends Component {
   constructor(props) {
     super(props)
+    const now = new Date();
+    const month = new MonthModel(now);
+    const events = new MockEvents(now);
+    month.mergeEvents(events);
     this.state = {
       showForm: false,
       eventsData: {}, // Contains nested obj of day_id:[{event info}, {event info}]
       currentDayId: null,
+      month: month,
     }
     this.handleClick = this.handleClick.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -131,8 +138,10 @@ onClose() {
 
     return (
       <div>
-        <Calendar handleClick={this.handleClick}
-        eventsData={this.state.eventsData}
+        <Calendar
+          handleClick={this.handleClick}
+          eventsData={this.state.eventsData}
+          month={this.state.month}
         />
 
         <Inputform
