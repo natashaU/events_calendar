@@ -3,6 +3,8 @@ import './App.css';
 import Calendar from './components/Calendar';
 import Inputform from './components/Inputform';
 import Editform from './components/Editform';
+import MockEvents from './models/MockEvents';
+import MonthModel from './models/MonthModel';
 import axios from "axios";
 
 /// TO DO: FIX SPACING, INDENT***
@@ -12,6 +14,10 @@ import axios from "axios";
 class App extends Component {
   constructor(props) {
     super(props)
+    const now = new Date();
+    const month = new MonthModel(now);
+    const events = new MockEvents(now);
+    month.mergeEvents(events);
     this.state = {
       showForm: false,
       eventsData: {}, // Contains nested obj of day_id:[{event info}, {event info}]
@@ -19,7 +25,8 @@ class App extends Component {
       showEditForm: false,
       currentEditId: null,
       editEvent: null,
-      currentMonth: null
+      currentMonth: null,
+      month: month,
     }
     this.handleClick = this.handleClick.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -211,6 +218,7 @@ class App extends Component {
         eventsData={this.state.eventsData}
         handleDelete={this.handleDelete}
         handleEditClick={this.handleEditClick}
+        month={this.state.month}
         />
 
         <Editform
