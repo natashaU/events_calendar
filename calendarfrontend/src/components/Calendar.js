@@ -61,7 +61,11 @@ class Calendar extends Component {
       <div className="App">
         <div>
           <div className="flex row-container month-container">
-            <h1>{this.props.month.monthName} {this.props.month.monthStart.getFullYear()}</h1>
+            <h1>
+              {this.props.month.monthStart.toLocaleString(navigator.language, { month: "long" })}
+              {' '}
+              {this.props.month.monthStart.getFullYear()}
+            </h1>
           </div>
           <div className="flex row-container day-container">
           {DAYS_SHORT.map(day =>
