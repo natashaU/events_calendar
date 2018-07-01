@@ -16,7 +16,7 @@ class App extends Component {
     super(props)
     const now = new Date();
     const month = new MonthModel(now);
-    const events = new MockEvents(now);
+    const events = new MockEvents(month.monthNext);
     month.mergeEvents(events);
     this.state = {
       showForm: false,
@@ -113,7 +113,7 @@ class App extends Component {
 
 
 
-  async handleDelete(id,event,day_id) {
+  async handleDelete(id, event) {
     try {
       event.stopPropagation(); // stop click event from parent div
       const newData = await axios.delete(`http://localhost:3001/events/${id}`);

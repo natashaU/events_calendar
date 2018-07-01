@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 //import './App.css';
-import 'font-awesome/css/font-awesome.min.css'
+// import 'font-awesome/css/font-awesome.min.css'
 
 const DAYS_SHORT = [
   'Sun',
@@ -29,10 +29,10 @@ class Calendar extends Component {
       );
       const eventStr = `${startStr}-${endStr} ${event.description}`
       return <div key={eventId} id={eventId} className="eventdiv">
-        <button onClick={(event)=>{this.props.handleDelete(id,event,day_id)}}>
+        <button onClick={(event)=>{this.props.handleDelete(eventId, event)}}>
           <i className="fa fa-trash"></i>
         </button>
-        <button onClick={(event, description)=>{this.props.handleEditClick(event,description,id,day_id)}}>edit</button>
+        <button onClick={(event, description)=>{this.props.handleEditClick(event, description, eventId, 0)}}>edit</button>
         {eventStr}
       </div>
     });
