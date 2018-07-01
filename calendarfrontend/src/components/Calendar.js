@@ -15,22 +15,29 @@ const DAYS_SHORT = [
 class Calendar extends Component {
 
 // create a list of all events for the day from "Events Data State", i = day_id
-  addEventList(events) {
-    return events.map(event => {
+  addEventList(dayId) {
+
+    const events = this.props.eventsData[dayId]
+    if (events) {
+      return events.map(event => {
       // use epoch timestamp as id when using mock data
-      const eventId = event.eventStart.valueOf();
-      const startStr = event.eventStart.toLocaleTimeString(
+        const eventId = event.id;
+        const startStr = event.start_time
+        /*.toLocaleTimeString(
         navigator.language,
         {hour: '2-digit', minute:'2-digit'}
-      );
-      const endStr = event.eventEnd.toLocaleTimeString(
+      );*/
+        const endStr = event.end_time
+      /*.toLocaleTimeString(
         navigator.language,
         {hour: '2-digit', minute:'2-digit'}
-      );
-      const eventStr = `${startStr}-${endStr} ${event.description}`
-      return <div key={eventId} id={eventId} className="eventdiv">{eventStr}</div>
-    });
-  }
+      );*/
+        const eventStr = `${startStr}-${endStr} ${event.description}`
+        console.log(eventStr +'eventstr')
+        return <div key={eventId} id={eventId} className="eventdiv">{eventStr}</div>
+      }) // end map
+    } // end if
+  } // end add event list
 
 
 // This is to make a div for each day of the calendar. Each day includes
@@ -38,11 +45,18 @@ class Calendar extends Component {
 // list of events is a child of this div.
   makeWeek(week) {
     return week.days.map(day => {
-      const dayId = day.dayStart.valueOf();
+      //console.log(this.props.eventsData)
+      //console.log('howdy')
+      let dayId = day.dayStart.valueOf();
+      //console.log(dayId + 'dayid')
+      //dayId = dayId.toString()
+      //console.log(dayId)
+      //console.log(this.props.eventsData['1530417600000'])
+      //console.log('bye')
       return (
-        <div key={dayId} onClick={()=>{this.props.handleClick({dayId})}} className="day">
+        <div key={dayId} onClick={()=>{this.props.handleClick(dayId)}} className="day">
           {day.dayStart.getDate()}
-          {this.addEventList(day.events)}
+          {this.addEventList(dayId)}
         </div>
       );
     });

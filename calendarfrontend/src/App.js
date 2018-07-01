@@ -14,7 +14,7 @@ class App extends Component {
     const now = new Date();
     const month = new MonthModel(now);
     const events = new MockEvents(now);
-    month.mergeEvents(events);
+    //month.mergeEvents(events);
     this.state = {
       showForm: false,
       eventsData: {}, // Contains nested obj of day_id:[{event info}, {event info}]
@@ -32,6 +32,8 @@ class App extends Component {
     try {
       const allData = await axios.get('http://localhost:3001/events/')
       const dataArr = allData.data.events // response from db
+
+
 
       // looping through all the response's events and storing them in an
       // nested obj, by Day_ID as the key, stored in "Events Data State."
@@ -56,6 +58,13 @@ class App extends Component {
         eventsData: eventsObj
       })
 
+      //const month = this.state.month
+
+      //month.mergeEvents(this.state.eventsData)
+      //month.mergeEvents(this.state.eventsData)
+
+      console.log(this.state.eventsData)
+
     } catch (error) {
         console.log(error);
       }
@@ -64,8 +73,9 @@ class App extends Component {
 
 
 // click each day div function
-async handleClick(event) {
-  var day_id = event.i
+async handleClick(day_id) {
+  //var day_id = event.i
+
 
 // show input form on click event
   await this.setState({

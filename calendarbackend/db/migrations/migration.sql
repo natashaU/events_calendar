@@ -7,5 +7,5 @@ CREATE TABLE IF NOT EXISTS events (
   start_time VARCHAR(8),
   end_time VARCHAR(8),
   description TEXT,
-  day_id INTEGER
+  day_id BIGINT
 );

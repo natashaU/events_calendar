@@ -3,7 +3,8 @@ const WEEK = 'week';
 const DAY = 'day';
 
 class MonthModel {
-  mergeEvents = (events) => {
+  /*mergeEvents = (events) => {
+    console.log(events)
     for (const week of this.weeks) {
       for (const day of week.days) {
         for (const event of events) {
@@ -14,14 +15,14 @@ class MonthModel {
         }
       }
     }
-  }
+  }*/
 
   constructor(startDate) {
     // JavaScript Date `set` functions mutate and cause unexpected
     // changes in any Date referenced elsewhere. Only use `new Date()`
     // to make a copy of an existing date. For any date variable
     // declared, always make a new copy
-    
+
     // For any `startDate` find the first day of its month
     const monthStart = new Date(
       startDate.getFullYear(),
