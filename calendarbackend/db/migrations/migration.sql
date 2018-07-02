@@ -4,7 +4,8 @@
 
 CREATE TABLE IF NOT EXISTS events (
   id SERIAL PRIMARY KEY,
-  event_start TIMESTAMP WITH TIME ZONE,
-  event_end TIMESTAMP WITH TIME ZONE,
-  description VARCHAR(64)
+  start_time VARCHAR(8),
+  end_time VARCHAR(8),
+  description VARCHAR(64),
+  day_id BIGINT
 );

@@ -15,18 +15,14 @@ const DAYS_SHORT = [
 class Calendar extends Component {
 
 // create a list of all events for the day from "Events Data State", i = day_id
-  addEventList(events) {
-    return events.map(event => {
+  addEventList(dayId) {
+    const events = this.props.eventsData[dayId]
+    if (events) {
+      return events.map(event => {
       // use epoch timestamp as id when using mock data
-      const eventId = event.eventStart.valueOf();
-      const startStr = event.eventStart.toLocaleTimeString(
-        navigator.language,
-        {hour: '2-digit', minute:'2-digit'}
-      );
-      const endStr = event.eventEnd.toLocaleTimeString(
-        navigator.language,
-        {hour: '2-digit', minute:'2-digit'}
-      );
+      const eventId = event.id;
+      const startStr = event.start_time
+      const endStr = event.end_time
       const eventStr = `${startStr}-${endStr} ${event.description}`
       return <div key={eventId} id={eventId} className="eventdiv">
         <button onClick={(event)=>{this.props.handleDelete(eventId, event)}}>
@@ -35,8 +31,9 @@ class Calendar extends Component {
         <button onClick={(event, description)=>{this.props.handleEditClick(event, description, eventId, 0)}}>edit</button>
         {eventStr}
       </div>
-    });
-  }
+      }); // end map
+    } // end if
+  } // end function
 
 
 // This is to make a div for each day of the calendar. Each day includes
@@ -46,9 +43,9 @@ class Calendar extends Component {
     return week.days.map(day => {
       const dayId = day.dayStart.valueOf();
       return (
-        <div key={dayId} onClick={()=>{this.props.handleClick({dayId})}} className="day">
+        <div key={dayId} onClick={()=>{this.props.handleClick(dayId)}} className="day">
           {day.dayStart.getDate()}
-          {this.addEventList(day.events)}
+          {this.addEventList(dayId)}
         </div>
       );
     });

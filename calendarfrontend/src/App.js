@@ -3,7 +3,6 @@ import './App.css';
 import Calendar from './components/Calendar';
 import Inputform from './components/Inputform';
 import Editform from './components/Editform';
-import MockEvents from './models/MockEvents';
 import MonthModel from './models/MonthModel';
 import axios from "axios";
 
@@ -16,8 +15,6 @@ class App extends Component {
     super(props)
     const now = new Date();
     const month = new MonthModel(now);
-    const events = new MockEvents(month.monthNext);
-    month.mergeEvents(events);
     this.state = {
       showForm: false,
       eventsData: {}, // Contains nested obj of day_id:[{event info}, {event info}]
@@ -102,8 +99,8 @@ class App extends Component {
 
 
 // click each day div function
-  async handleClick(event) {
-    let day_id = event.i
+  async handleClick(day_id) {
+    console.log(day_id)
   // show input form on click event
     await this.setState({
       showForm: true,

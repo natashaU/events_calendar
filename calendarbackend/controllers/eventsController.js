@@ -63,7 +63,6 @@ module.exports = {
 
     update(req, res ) {
     const id = parseInt(req.params.id)
-    console.log(id, 'update controller');
     events.update(id,req.body)
       .then((event) => {
         res.json({event})

@@ -21,6 +21,7 @@ module.exports = {
 
 
   save(event) {
+    console.log('im in save')
     return db.one(`
       INSERT INTO events
       (start_time, end_time, description, day_id)
@@ -53,9 +54,7 @@ module.exports = {
 
 };
 
-//start_time = ${event.start_time},
-      //end_time = ${event.end_time},
-      //description = ${event.description}
+
 
 
 
