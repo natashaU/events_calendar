@@ -38,9 +38,9 @@ class App extends Component {
     this.handleMonthClick = this.handleMonthClick.bind(this)
   }
 
-  handleMonthClick(date) {
+  handleMonthClick(nextMonthTimestamp) {
     this.setState({
-      month: new MonthModel(date)
+      month: new MonthModel(nextMonthTimestamp)
     })
   }
 
