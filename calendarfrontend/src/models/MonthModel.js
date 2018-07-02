@@ -10,7 +10,7 @@ class MonthModel {
           if (event.eventStart >= day.dayStart && event.eventStart < day.dayNext ||
             event.eventEnd >= day.dayStart && event.eventEnd < day.dayNext) {
             day.events.push(event);
-          }
+          } // to-do function for version 3
         }
       }
     }

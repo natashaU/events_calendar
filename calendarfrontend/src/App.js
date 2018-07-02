@@ -3,7 +3,6 @@ import './App.css';
 import Calendar from './components/Calendar';
 import Inputform from './components/Inputform';
 import Editform from './components/Editform';
-import MockEvents from './models/MockEvents';
 import MonthModel from './models/MonthModel';
 import axios from "axios";
 
@@ -16,12 +15,10 @@ class App extends Component {
     super(props)
     const now = new Date();
     const month = new MonthModel(now);
-    const events = new MockEvents(month.monthNext);
-    month.mergeEvents(events);
     this.state = {
       showForm: false,
       eventsData: {}, // Contains nested obj of day_id:[{event info}, {event info}]
-      currentDayId: null,
+      currentDay: null,
       showEditForm: false,
       currentEditId: null,
       editEvent: null,
@@ -102,12 +99,11 @@ class App extends Component {
 
 
 // click each day div function
-  async handleClick(event) {
-    let day_id = event.i
+  async handleClick(day) {
   // show input form on click event
     await this.setState({
       showForm: true,
-      currentDayId: day_id
+      currentDay: day
     })
   }
 
@@ -165,10 +161,10 @@ class App extends Component {
 
 
 // to handle submit form
- async handleSubmit(start_time, end_time, description) {
+ async handleSubmit(startHour, startMinutes, endHour, endMinutes, description) {
   try  {
 
-    let current_day = this.state.currentDayId
+    const currentDay = this.state.currentDay
 
     // hide input form
     this.setState({
@@ -177,10 +173,19 @@ class App extends Component {
 
     // post info to database
     let getEvents = await axios.post('http://localhost:3001/events', {
-    start_time: start_time,
-    end_time: end_time,
+    event_start: new Date(
+      currentDay.getFullYear(),
+      currentDay.getDate(),
+      startHour,
+      startMinutes
+    );
+    event_end: new Date(
+      currentDay.getFullYear(),
+      currentDay.getDate(),
+      startHour,
+      startMinutes
+    );
     description: description,
-    day_id: this.state.currentDayId // day_id keeps track of current day
   })
 
 
