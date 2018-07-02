@@ -35,6 +35,13 @@ class App extends Component {
     this.handleEditClick = this.handleEditClick.bind(this);
     this.closeEditForm = this.closeEditForm.bind(this);
     this.handleEditSubmit = this.handleEditSubmit.bind(this)
+    this.handleMonthClick = this.handleMonthClick.bind(this)
+  }
+
+  handleMonthClick(date) {
+    this.setState({
+      month: new MonthModel(date)
+    })
   }
 
 
@@ -219,6 +226,7 @@ class App extends Component {
         handleDelete={this.handleDelete}
         handleEditClick={this.handleEditClick}
         month={this.state.month}
+        handleMonthClick={this.handleMonthClick}
         />
 
         <Editform

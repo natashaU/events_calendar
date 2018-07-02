@@ -21,7 +21,7 @@ class MonthModel {
     // changes in any Date referenced elsewhere. Only use `new Date()`
     // to make a copy of an existing date. For any date variable
     // declared, always make a new copy
-    
+
     // For any `startDate` find the first day of its month
     const monthStart = new Date(
       startDate.getFullYear(),
@@ -34,6 +34,12 @@ class MonthModel {
     const monthNext = new Date(
       monthStart.getFullYear(),
       monthStart.getMonth() + 1,
+      1,
+    );
+
+    const monthPrev = new Date(
+      monthStart.getFullYear(),
+      monthStart.getMonth() - 1,
       1,
     );
 
@@ -122,6 +128,7 @@ class MonthModel {
     this.monthStart = monthStart;
     this.monthNext = monthNext;
     this.monthWeekStart = monthWeekStart;
+    this.monthPrev = monthPrev;
     this.weeks = weeks;
   }
 }

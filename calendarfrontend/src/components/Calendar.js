@@ -62,9 +62,12 @@ class Calendar extends Component {
         <div>
           <div className="flex row-container month-container">
             <h1>
+              <button onClick={()=>{this.props.handleMonthClick(this.props.month.monthPrev)}}>previous month</button>
               {this.props.month.monthStart.toLocaleString(navigator.language, { month: "long" })}
               {' '}
               {this.props.month.monthStart.getFullYear()}
+              <button onClick={()=>{this.props.handleMonthClick(this.props.month.monthNext)}}>next month</button>
+              <button onClick={()=>{this.props.handleMonthClick(new Date())}}>today</button>
             </h1>
           </div>
           <div className="flex row-container day-container">
