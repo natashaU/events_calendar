@@ -38,6 +38,13 @@ class MonthModel {
       1,
     );
 
+    const monthPrev = new Date(
+      monthStart.getFullYear(),
+      monthStart.getMonth() - 1,
+      1,
+    );
+    console.log(monthPrev + 'monthPrev')
+
     // Get the preceeding days from the month prior for the full week of the first day of Month.
     const monthWeekStart = new Date(
       monthStart.getFullYear(),
@@ -123,6 +130,7 @@ class MonthModel {
     this.monthStart = monthStart;
     this.monthNext = monthNext;
     this.monthWeekStart = monthWeekStart;
+    this.monthPrev = monthPrev;
     this.weeks = weeks;
   }
 }

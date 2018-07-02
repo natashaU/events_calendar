@@ -24,6 +24,16 @@ class App extends Component {
     this.handleClick = this.handleClick.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.onClose = this.onClose.bind(this);
+    this.handleMonthClick = this.handleMonthClick.bind(this)
+  }
+
+  handleMonthClick(){
+    const nowNext = this.state.month.monthNext
+    console.log(nowNext)
+    const nextMonth = new MonthModel(nowNext)
+    this.setState({
+      month: nextMonth
+    })
   }
 
 
@@ -63,7 +73,7 @@ class App extends Component {
       //month.mergeEvents(this.state.eventsData)
       //month.mergeEvents(this.state.eventsData)
 
-      console.log(this.state.eventsData)
+      //console.log(this.state.eventsData)
 
     } catch (error) {
         console.log(error);
@@ -152,6 +162,7 @@ onClose() {
           handleClick={this.handleClick}
           eventsData={this.state.eventsData}
           month={this.state.month}
+          handleMonthClick={this.handleMonthClick}
         />
 
         <Inputform

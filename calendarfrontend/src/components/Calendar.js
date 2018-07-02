@@ -73,6 +73,7 @@ class Calendar extends Component {
               {this.props.month.monthStart.toLocaleString(navigator.language, { month: "long" })}
               {' '}
               {this.props.month.monthStart.getFullYear()}
+              <button onClick={()=>{this.props.handleMonthClick()}}>next month</button>
             </h1>
           </div>
           <div className="flex row-container day-container">
