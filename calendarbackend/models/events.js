@@ -19,9 +19,20 @@ module.exports = {
       `, id);
   },
 
+   save(event) {
+    return db.many(`
+      INSERT INTO events
+      (start_time, end_time, description, day_id)
+      VALUES
+      ($/start_time/, $/end_time/, $/description/, $/day_id/);
+      SELECT * FROM events
+      WHERE day_id = $/day_id/
+      ORDER BY start_time
+      `, event);
+  },
 
-  save(event) {
-    console.log('im in save')
+
+  /*save(event) {
     return db.one(`
       INSERT INTO events
       (start_time, end_time, description, day_id)
@@ -29,7 +40,7 @@ module.exports = {
       ($/start_time/, $/end_time/, $/description/, $/day_id/)
       RETURNING *
       `, event);
-  },
+  },*/
 
   destroy(id) {
     return db.query(`
@@ -40,7 +51,21 @@ module.exports = {
     `, id);
   },
 
-   update(id, event) {
+  update(id, event) {
+    return db.many(`
+      UPDATE events
+      SET
+      start_time = $/start_time/,
+      end_time = $/end_time/,
+      description = $/description/
+      WHERE id = ${id};
+      SELECT * FROM events
+      WHERE day_id = $/day_id/
+      ORDER BY start_time
+    `, event);
+  },
+
+   /*update(id, event) {
     return db.one(`
       UPDATE events
       SET
@@ -50,7 +75,7 @@ module.exports = {
       WHERE id = ${id}
       RETURNING *
     `, event);
-  },
+  },*/
 
 };
 

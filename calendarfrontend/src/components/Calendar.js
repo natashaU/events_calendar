@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-//import './App.css';
-// import 'font-awesome/css/font-awesome.min.css'
+import 'font-awesome/css/font-awesome.min.css'
 
 const DAYS_SHORT = [
   'Sun',
@@ -28,7 +27,9 @@ class Calendar extends Component {
         <button onClick={(event)=>{this.props.handleDelete(eventId, event)}}>
           <i className="fa fa-trash"></i>
         </button>
-        <button onClick={(event, description)=>{this.props.handleEditClick(event, description, eventId, 0)}}>edit</button>
+        <button onClick={(event, description)=>{this.props.handleEditClick(event, description, eventId, dayId)}}>
+         <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
+        </button>
         {eventStr}
       </div>
       }); // end map
@@ -37,7 +38,7 @@ class Calendar extends Component {
 
 
 // This is to make a div for each day of the calendar. Each day includes
-// a click event function that pops up the input form. i = day number.
+// a click event function that pops up the input form. DayId is the epoch time stamp
 // list of events is a child of this div.
   makeWeek(week) {
     return week.days.map(day => {

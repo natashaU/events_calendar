@@ -42,7 +42,7 @@ module.exports = {
       day_id: req.body.day_id
     })
     .then(event => {
-      res.json({message: 'ok', data: { event }});
+      res.json({ event });
     })
     .catch(err => {
       console.log(err);

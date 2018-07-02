@@ -16,7 +16,7 @@ class Inputform extends Component {
           <form className="inputForm"
           onSubmit={event=>{
             event.preventDefault();
-            this.props.handleSubmit(
+            this.props.handleSubmitForm(
             event.target.start_time.value,
             event.target.end_time.value,
             event.target.description.value,

@@ -22,16 +22,15 @@ class App extends Component {
       showEditForm: false,
       currentEditId: null,
       editEvent: null,
-      currentMonth: null,
       month: month,
     }
     this.handleClick = this.handleClick.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleSubmitForm = this.handleSubmitForm.bind(this);
     this.onClose = this.onClose.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
     this.handleEditClick = this.handleEditClick.bind(this);
     this.closeEditForm = this.closeEditForm.bind(this);
-    this.handleEditSubmit = this.handleEditSubmit.bind(this)
+    //this.handleEditSubmit = this.handleEditSubmit.bind(this)
     this.handleMonthClick = this.handleMonthClick.bind(this)
   }
 
@@ -47,8 +46,7 @@ class App extends Component {
     try {
       const allData = await axios.get('http://localhost:3001/events/')
       const dataArr = allData.data.events // response from db
-      console.log(dataArr)
-      console.log(this.state.eventsData)
+
 
       // function to iterate dataArr to make events obj for state
       const eventsObj = await this.makeEventsObj(dataArr)
@@ -85,22 +83,19 @@ class App extends Component {
 
 
 
-  async handleEditClick(event, description, id,day_id) {
+  handleEditClick(event, description, id,day_id) {
     event.stopPropagation();
-    await this.setState({showEditForm: true, currentEditId:id, editEvent: description})
-    console.log(this.state.editEvent + ' state')
-
+    this.setState({showEditForm: true, currentEditId:id, editEvent: description, currentDayId: day_id})
   }
 
-  closeEditForm(){
-    this.setState({showEditForm:false})
-  }
+  /*closeEditForm(){
+    this.setState({showEditForm:false, currentEditId: null})
+  }*/
 
 
 
 // click each day div function
   async handleClick(day_id) {
-    console.log(day_id)
   // show input form on click event
     await this.setState({
       showForm: true,
@@ -111,8 +106,10 @@ class App extends Component {
 // close input form
   onClose() {
    this.setState({
-    showForm: false
+    showForm: false,
+    showEditForm: false,
    })
+
   }
 
 
@@ -136,9 +133,50 @@ class App extends Component {
     }
   };
 
+  async handleSubmitForm(start_time, end_time, description){
+    try {
+
+      const current_day = this.state.currentDayId
+      let getEvents; // declare variable for resonse data
+
+      const postObj = {
+        start_time: start_time,
+        end_time: end_time,
+        description: description,
+        day_id: this.state.currentDayId // day_id keeps track of current day
+      }
+
+      if (this.state.showForm) {
+        this.onClose() // close event form
+        getEvents = await axios.post('http://localhost:3001/events', postObj)
+      } else if (this.state.showEditForm) {
+        this.onClose() // close event form
+        const id = this.state.currentEditId
+        getEvents = await axios.put('http://localhost:3001/events/'+id, postObj)
+      }
+
+
+      //getEvents = await axios.get('http://localhost:3001/events/'+current_day)
+
+      this.setState(prevState => ({
+        eventsData: {
+          ...prevState.eventsData,
+          [this.state.currentDayId]: getEvents.data.event
+        },
+        currentDayId: null,
+        currentEditId: null
+      }))
+
+
+    } catch(error) {
+        console.log(error)
+      } // end try catch block
+
+  } // end function
+
 
 // to handle submit form
- async handleEditSubmit(start_time, end_time, description) {
+ /*async handleEditSubmit(start_time, end_time, description) {
   try  {
     let current_day = this.state.currentDayId
 
@@ -147,22 +185,26 @@ class App extends Component {
       showEditForm: false
     })
 
-    // post info to database
-    let id = this.state.currentEditId
-    let getEvents = await axios.put('http://localhost:3001/events/'+id, {
+    var post = {
     start_time: start_time,
     end_time: end_time,
     description: description
-    //day_id: this.state.currentDayId // day_id keeps track of current day
-  })
+    day_id: this.state.currentDayId // day_id keeps track of current day
+  }
+
+    // post info to database
+    let id = this.state.currentEditId
+    let getEvents = await axios.put('http://localhost:3001/events/'+id, post)
+
+
 } catch(error) {
     console.log(error)
   }
-} // end edit function
+} // end edit function*/
 
 
 // to handle submit form
- async handleSubmit(start_time, end_time, description) {
+ /*async handleSubmit(start_time, end_time, description) {
   try  {
 
     let current_day = this.state.currentDayId
@@ -210,7 +252,7 @@ class App extends Component {
         console.log(error);
       }
 
-} // end handle-submit function
+} // end handle-submit function*/
 
 
 
@@ -229,14 +271,14 @@ class App extends Component {
         <Editform
         editForm={this.state.showEditForm}
         onClose={this.closeEditForm}
-        handleEditSubmit={this.handleEditSubmit}
+        handleSubmitForm={this.handleSubmitForm}
         editEvent={this.state.editEvent}
         />
 
         <Inputform
         showForm={this.state.showForm}
         onClose={this.onClose}
-        handleSubmit={this.handleSubmit}
+        handleSubmitForm={this.handleSubmitForm}
         />
       </div>
     );

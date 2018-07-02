@@ -8,6 +8,7 @@ class Editform extends Component {
     this.state = {
       defaultval: this.props.editEvent
     }
+    console.log(this.state.defaultval + 'defaultval')
 
   }
 
@@ -27,7 +28,7 @@ class Editform extends Component {
           <form className="inputForm"
           onSubmit={event=>{
             event.preventDefault();
-            this.props.handleEditSubmit(
+            this.props.handleSubmitForm(
             event.target.start_time.value,
             event.target.end_time.value,
             event.target.description.value,
