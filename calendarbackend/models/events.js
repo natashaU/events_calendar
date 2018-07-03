@@ -12,7 +12,7 @@ module.exports = {
 
 
   findById(id) {
-    return db.many(`
+    return db.query(`
       SELECT * FROM events
       WHERE day_id = $1
       ORDER BY start_time
@@ -32,12 +32,10 @@ module.exports = {
   },
 
   destroy(id) {
-    return db.query(`
+    return db.none(`
       DELETE FROM events
-      WHERE id = $1;
-      SELECT * FROM events
-      ORDER BY day_id, start_time
-    `, id);
+      WHERE id = $1
+      `, id);
   },
 
   update(id, event) {

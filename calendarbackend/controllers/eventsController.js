@@ -49,7 +49,7 @@ module.exports = {
     destroy(req,res) {
       events.destroy(req.params.id)
       .then(event => {
-        res.status(200).json({event});
+        res.status(200).json({message:'200'});
       }).catch(err => {
       console.log(err);
       res.status(400).json({message: '400', err});

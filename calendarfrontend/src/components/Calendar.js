@@ -29,7 +29,7 @@ class Calendar extends Component {
       ${eventDescription}`
 
       return <div key={eventId} id={eventId} className="eventdiv">
-        <button onClick={(event)=>{this.props.handleDelete(eventId, event)}}>
+        <button onClick={(event)=>{this.props.handleDelete(eventId, event, dayId)}}>
           <i className="fa fa-trash"></i>
         </button>
 

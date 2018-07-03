@@ -13,7 +13,7 @@ to the database. More features and Heroku deployment coming soon! :neckbeard:
 * Express
 * CSS
 
-![calendar](./calendarone.png)
+![calendar](./pictures/calendarone.png)
 
 ## Specs:
 
@@ -22,7 +22,7 @@ to the database. More features and Heroku deployment coming soon! :neckbeard:
 * User is able to click on left and right arrows to switch months
 * User is able to click on trash can & pencil icons to delete & update events
 
-![Edit](./calendartwo.png)
+![Edit](./pictures/calendartwo.png)
 
 ## To check out the game locally
 

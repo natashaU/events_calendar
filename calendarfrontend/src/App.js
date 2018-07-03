@@ -93,17 +93,20 @@ class App extends Component {
     })
   }
 
-  async handleDelete(id, event) {
+  async handleDelete(id, event, day_id) {
     try {
       event.stopPropagation(); // stop click event from parent div
-      const newData = await axios.delete(`http://localhost:3001/events/${id}`);
+      await axios.delete(`http://localhost:3001/events/${id}`);
+      // only get events for day
+      const newData = await axios.get(`http://localhost:3001/events/${day_id}`)
       const dataArr = newData.data.event
-     //iterate over updated data to make new object
-      const eventsObj = await this.makeEventsObj(dataArr)
-     //update the state with new object
-      this.setState({
-        eventsData: eventsObj
-      })
+
+      this.setState(prevState => ({
+        eventsData: {
+          ...prevState.eventsData, // to not over-ride other day events
+          [day_id]: dataArr
+        }
+      }))
     } catch(error) {
       console.log(error);
     }
