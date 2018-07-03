@@ -20,14 +20,17 @@ module.exports = {
 
 
     // get events for one day_id to only update the state of that day_id
-    getDay(req, res) {
-      const id = parseInt(req.params.id)
-      events.findById(id)
-      .then(event => {
-      res.json({
-        event
-      });
-    }).catch(err => {
+    getEvents(req, res) {
+      const start = new Date(req.params.start);
+      const end = new Date(req.params.end);
+      events.findByDate(
+        start,
+        end,
+      ).then(events => {
+        res.json({
+          events
+        });
+      }).catch(err => {
         console.log(err);
         res.status(400).json({message: '400', err});
       });
@@ -36,10 +39,9 @@ module.exports = {
 // post new event
     create(req, res) {
     events.save({
-      start_time: req.body.start_time,
-      end_time: req.body.end_time,
+      event_start: req.body.event_start,
+      event_end: req.body.event_end,
       description: req.body.description,
-      day_id: req.body.day_id
     })
     .then(event => {
       res.json({message: 'ok', data: { event }});

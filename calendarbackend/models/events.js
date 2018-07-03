@@ -6,26 +6,33 @@ module.exports = {
   findAll() {
     return db.query(`
     SELECT * FROM events
-    ORDER BY day_id, start_time`);
+    ORDER BY event_start, event_end`);
 
   },
 
 
-  findById(id) {
+  findByDate(start, end) {
     return db.many(`
       SELECT * FROM events
-      WHERE day_id = $1
-      ORDER BY start_time
-      `, id);
+      WHERE event_start >= $1 AND
+      event_end <= $2 OR
+      event_start <= $3 AND
+      event_end >= $4
+      ORDER BY event_start, event_end`,
+      start,
+      end,
+      end,
+      start,
+    );
   },
 
 
   save(event) {
     return db.one(`
       INSERT INTO events
-      (start_time, end_time, description, day_id)
+      (event_start, event_end, description)
       VALUES
-      ($/start_time/, $/end_time/, $/description/, $/day_id/)
+      ($/event_start/, $/event_end/, $/description/)
       RETURNING *
       `, event);
   },
@@ -35,7 +42,7 @@ module.exports = {
       DELETE FROM events
       WHERE id = $1;
       SELECT * FROM events
-      ORDER BY day_id, start_time
+      ORDER BY event_start, event_end
     `, id);
   },
 
@@ -43,19 +50,11 @@ module.exports = {
     return db.one(`
       UPDATE events
       SET
-      start_time = $/start_time/,
-      end_time = $/end_time/,
+      event_start = $/event_start/,
+      event_end = $/event_end/,
       description = $/description/
       WHERE id = ${id}
       RETURNING *
     `, event);
   },
-
 };
-
-//start_time = ${event.start_time},
-      //end_time = ${event.end_time},
-      //description = ${event.description}
-
-
-

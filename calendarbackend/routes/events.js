@@ -11,7 +11,7 @@ eventsRouter
 
   eventsRouter
   .route('/:id')
-  .get(controller.getDay)
+  .get(controller.getEvents)
   .put(controller.update)
   .delete(controller.destroy)
 

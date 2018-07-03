@@ -17,8 +17,8 @@ class Inputform extends Component {
           onSubmit={event=>{
             event.preventDefault();
             this.props.handleSubmit(
-            event.target.start_time.value,
-            event.target.end_time.value,
+            event.target.event_start.value,
+            event.target.event_end.value,
             event.target.description.value,
             )}}>
               <ul className="flex-outer-form">
@@ -36,18 +36,18 @@ class Inputform extends Component {
 
                 <li>
                   <label>Start Time:</label>
-                  <input id="start_time"
-                  type="time"
-                  name="start_time"
+                  <input id="event_start"
+                  type="datetime-local"
+                  name="event_start"
                   required
                   />
                 </li>
 
                 <li>
                   <label>End Time:</label>
-                  <input id="end_time"
-                  type="time"
-                  name="end_time"
+                  <input id="event_end"
+                  type="datetime-local"
+                  name="event_end"
                   required
                   />
                 </li>

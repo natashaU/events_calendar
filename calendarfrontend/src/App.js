@@ -14,7 +14,7 @@ class App extends Component {
   constructor(props) {
     super(props)
     const now = new Date();
-    const month = new MonthModel(now);
+    const month = new MonthModel(now, []);
     this.state = {
       showForm: false,
       eventsData: {}, // Contains nested obj of day_id:[{event info}, {event info}]
@@ -48,13 +48,8 @@ class App extends Component {
       const allData = await axios.get('http://localhost:3001/events/')
       const dataArr = allData.data.events // response from db
       console.log(dataArr)
-      console.log(this.state.eventsData)
-
-      // function to iterate dataArr to make events obj for state
-      const eventsObj = await this.makeEventsObj(dataArr)
-
-      this.setState({
-        eventsData: eventsObj
+      this.setState(prevState => {
+        month: new MonthModel(prevState.month.monthStart, dataArr)
       })
 
     } catch (error) {
@@ -161,62 +156,49 @@ class App extends Component {
 
 
 // to handle submit form
- async handleSubmit(startHour, startMinutes, endHour, endMinutes, description) {
+ async handleSubmit(eventStart, eventEnd, description) {
   try  {
 
-    const currentDay = this.state.currentDay
+    const dayStart = this.state.currentDay.dayStart;
 
     // hide input form
     this.setState({
       showForm: false
     })
 
+    /*const eventStart = new Date(
+      dayStart.getFullYear(),
+      dayStart.getDate(),
+      startHour,
+      startMinutes,
+    );
+    const eventEnd = new Date(
+      dayStart.getFullYear(),
+      dayStart.getDate(),
+      endHour,
+      endMinutes,
+    );*/
+
     // post info to database
-    let getEvents = await axios.post('http://localhost:3001/events', {
-    event_start: new Date(
-      currentDay.getFullYear(),
-      currentDay.getDate(),
-      startHour,
-      startMinutes
-    );
-    event_end: new Date(
-      currentDay.getFullYear(),
-      currentDay.getDate(),
-      startHour,
-      startMinutes
-    );
-    description: description,
-  })
+    await axios.post('http://localhost:3001/events', {
+      event_start: eventStart,
+      event_end: eventEnd,
+      description: description,
+    });
 
+    const eventsResponse = await axios.get('http://localhost:3001/events', {
+      start: this.state.month.monthWeekStart,
+      end: this.state.month.monthNext,
+    });
 
-// Setting the state of eventsData with updated info from form. Adding new event to state.
-// if the current_day id doesn't exist, just add one event to state.
-    if (!this.state.eventsData[current_day]) {
-        this.setState(prevState => ({
-          eventsData: {
-            ...prevState.eventsData, // keep all info of events intact
-            // only update day_id objects
-            [this.state.currentDayId]: [{ start_time: start_time, end_time: end_time,
-          description: description, day_id: current_day}]
-          }
-        }))
-
-
-    } else {
-      // if day_id exists, get all event info from database to reflect new
-      // event that was just added
-      let getEvents = await axios.get('http://localhost:3001/events/'+current_day);
-      this.setState(prevState => ({
-        eventsData: {
-          ...prevState.eventsData,
-          [this.state.currentDayId]: getEvents.data.event
-        }
-      }))
-    } // end if-else statement
-
+    const something = this.state.month
+    console.log(eventsResponse)
+    this.setState(prevState => ({
+      month: new MonthModel(prevState.month.monthStart, eventsResponse.data.events)
+    }));
   } catch (error) {
-        console.log(error);
-      }
+    console.log(error);
+  }
 
 } // end handle-submit function
 

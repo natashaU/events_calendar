@@ -3,20 +3,7 @@ const WEEK = 'week';
 const DAY = 'day';
 
 class MonthModel {
-  mergeEvents = (events) => {
-    for (const week of this.weeks) {
-      for (const day of week.days) {
-        for (const event of events) {
-          if (event.eventStart >= day.dayStart && event.eventStart < day.dayNext ||
-            event.eventEnd >= day.dayStart && event.eventEnd < day.dayNext) {
-            day.events.push(event);
-          } // to-do function for version 3
-        }
-      }
-    }
-  }
-
-  constructor(startDate) {
+  constructor(startDate, events) {
     // JavaScript Date `set` functions mutate and cause unexpected
     // changes in any Date referenced elsewhere. Only use `new Date()`
     // to make a copy of an existing date. For any date variable
@@ -106,12 +93,26 @@ class MonthModel {
           dayStart.getMonth(),
           dayStart.getDate() + 1,
         );
+        const dayEvents = [];
+        for (const event of events) {
+          const eventStart = new Date(event.event_start);
+          const eventEnd = new Date(event.event_end);
+          console.log(eventStart)
+          if (eventStart >= dayStart && eventStart < dayNext ||
+            eventEnd >= dayStart && eventEnd < dayNext) {
+            dayEvents.push({
+              eventStart: eventStart,
+              eventEnd: eventEnd,
+              description: event.description,
+            });
+          }
+        }
         // Push this day model unto the `days` Array
         days.push({
           kind: DAY,
           dayStart: dayStart,
           dayNext: dayNext,
-          events: [],
+          events: dayEvents,
         });
       }
       // The days are created for this week.
@@ -130,6 +131,7 @@ class MonthModel {
     this.monthWeekStart = monthWeekStart;
     this.monthPrev = monthPrev;
     this.weeks = weeks;
+    this.events = events;
   }
 }
 

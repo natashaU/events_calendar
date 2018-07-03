@@ -44,6 +44,7 @@ class Calendar extends Component {
 // list of events is a child of this div.
   makeWeek(week) {
     return week.days.map(day => {
+      const dayId = day.dayStart.valueOf();
       return (
         <div key={dayId} onClick={()=>{this.props.handleClick(day)}} className="day">
           {day.dayStart.getDate()}
