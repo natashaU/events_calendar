@@ -12,6 +12,16 @@ const DAYS_SHORT = [
   'Sat',
 ];
 
+// todo***
+// do database calls when you do month next, month prev, and today buttons.
+/// take result of the request and take those events, and pass it into a new month model.
+
+// set values on input form, to const now = new Date()
+//eventStart = new Date(now.getFullYear, now.getDate(), now.getHour() +1)
+//eventEnd = new Date(now.getFullYear, now.getDate(), now.getHour() +2)
+// do not enable submitButton if event.end <= event.Start
+
+
 class Calendar extends Component {
 
 // create a list of all events for the day from "Events Data State", i = day_id
