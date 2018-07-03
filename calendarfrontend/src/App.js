@@ -45,16 +45,19 @@ class App extends Component {
 
   async componentDidMount() {
     try {
-      const allData = await axios.get('http://localhost:3001/events/')
+      const allData = await axios.get('http://localhost:3001/events/', {
+        start: this.state.month.monthWeekStart,
+        end: this.state.month.monthNext,
+      })
       const dataArr = allData.data.events // response from db
       console.log(dataArr)
-      this.setState(prevState => {
+      this.setState(prevState => ({
         month: new MonthModel(prevState.month.monthStart, dataArr)
-      })
+      }));
 
     } catch (error) {
-        console.log(error);
-      }
+      console.log(error);
+    }
 
   } // end component did mount
 
