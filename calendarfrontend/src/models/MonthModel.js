@@ -3,18 +3,6 @@ const WEEK = 'week';
 const DAY = 'day';
 
 class MonthModel {
-  mergeEvents = (events) => {
-    for (const week of this.weeks) {
-      for (const day of week.days) {
-        for (const event of events) {
-          if (event.eventStart >= day.dayStart && event.eventStart < day.dayNext ||
-            event.eventEnd >= day.dayStart && event.eventEnd < day.dayNext) {
-            day.events.push(event);
-          }
-        }
-      }
-    }
-  }
 
   constructor(startDate) {
     // JavaScript Date `set` functions mutate and cause unexpected
@@ -36,7 +24,7 @@ class MonthModel {
       monthStart.getMonth() + 1,
       1,
     );
-
+     // previous month
     const monthPrev = new Date(
       monthStart.getFullYear(),
       monthStart.getMonth() - 1,
@@ -99,7 +87,7 @@ class MonthModel {
       ) {
         // Make a copy of this iteration's start date
         const dayStart = new Date(dayCurrent.valueOf());
-        // Make a value for the next day. This is useful to know if and event
+        // Make a value for the next day. This is useful to know if an event
         // falls within this day's bounderies
         const dayNext = new Date(
           dayStart.getFullYear(),

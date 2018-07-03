@@ -4,8 +4,16 @@ import React, {Component} from 'react';
 
 class Inputform extends Component {
   render() {
-    if (!this.props.showForm) {
+    if (!this.props.showForm && !this.props.showEditForm) {
       return null;
+    }
+
+    if (this.props.showEditForm) {
+      this.header = "Edit Event";
+      this.defaultVal = this.props.editEventDescription;
+    } else {
+      this.header = "Add Event";
+      this.defaultVal = null;
     }
 
 
@@ -22,7 +30,7 @@ class Inputform extends Component {
             event.target.description.value,
             )}}>
               <ul className="flex-outer-form">
-                <li><h1 className="formheader">Add Event</h1></li>
+                <li><h1 className="formheader">{this.header}</h1></li>
                 <li>
                   <label>Description:</label>
                   <input
@@ -30,11 +38,10 @@ class Inputform extends Component {
                   placeholder="Event Description"
                   name="description"
                   id='description'
+                  defaultValue={this.defaultVal}
                   required
                   />
                 </li>
-
-
 
                 <li>
                   <label>Start Time:</label>

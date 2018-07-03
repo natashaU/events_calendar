@@ -2,12 +2,8 @@ import React, { Component } from 'react';
 import './App.css';
 import Calendar from './components/Calendar';
 import Inputform from './components/Inputform';
-import Editform from './components/Editform';
 import MonthModel from './models/MonthModel';
 import axios from "axios";
-
-/// TO DO: FIX SPACING, INDENT***
-
 
 
 class App extends Component {
@@ -17,36 +13,26 @@ class App extends Component {
     const month = new MonthModel(now);
     this.state = {
       showForm: false,
+      showEditForm: false,
       eventsData: {}, // Contains nested obj of day_id:[{event info}, {event info}]
       currentDayId: null,
-      showEditForm: false,
       currentEditId: null,
-      editEvent: null,
+      editEventDescription: null,
       month: month,
     }
     this.handleClick = this.handleClick.bind(this);
+    this.handleEditClick = this.handleEditClick.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
     this.handleSubmitForm = this.handleSubmitForm.bind(this);
     this.onClose = this.onClose.bind(this);
-    this.handleDelete = this.handleDelete.bind(this);
-    this.handleEditClick = this.handleEditClick.bind(this);
-    this.closeEditForm = this.closeEditForm.bind(this);
-    //this.handleEditSubmit = this.handleEditSubmit.bind(this)
     this.handleMonthClick = this.handleMonthClick.bind(this)
   }
-
-  handleMonthClick(nextMonthTimestamp) {
-    this.setState({
-      month: new MonthModel(nextMonthTimestamp)
-    })
-  }
-
 
 
   async componentDidMount() {
     try {
       const allData = await axios.get('http://localhost:3001/events/')
       const dataArr = allData.data.events // response from db
-
 
       // function to iterate dataArr to make events obj for state
       const eventsObj = await this.makeEventsObj(dataArr)
@@ -58,9 +44,14 @@ class App extends Component {
     } catch (error) {
         console.log(error);
       }
-
   } // end component did mount
 
+  // to click next month
+  handleMonthClick(nextMonthTimestamp){
+    this.setState({
+      month: new MonthModel(nextMonthTimestamp)
+    })
+  }
 
   makeEventsObj(dataArr) {
     // data arr = response from get request
@@ -79,22 +70,13 @@ class App extends Component {
     return eventsObj
   }
 
-
-
-
-
-  handleEditClick(event, description, id,day_id) {
+// when you click on an edit button
+  handleEditClick(event, description, id, day_id) {
     event.stopPropagation();
-    this.setState({showEditForm: true, currentEditId:id, editEvent: description, currentDayId: day_id})
+    this.setState({showEditForm: true, currentEditId:id, editEventDescription: description, currentDayId: day_id})
   }
 
-  /*closeEditForm(){
-    this.setState({showEditForm:false, currentEditId: null})
-  }*/
-
-
-
-// click each day div function
+// click each day-div  to add event form
   async handleClick(day_id) {
   // show input form on click event
     await this.setState({
@@ -105,29 +87,23 @@ class App extends Component {
 
 // close input form
   onClose() {
-   this.setState({
-    showForm: false,
-    showEditForm: false,
-   })
-
+    this.setState({
+      showForm: false,
+      showEditForm: false,
+    })
   }
-
-
 
   async handleDelete(id, event) {
     try {
       event.stopPropagation(); // stop click event from parent div
       const newData = await axios.delete(`http://localhost:3001/events/${id}`);
       const dataArr = newData.data.event
-
-    // iterate over updated data to make new object
+     //iterate over updated data to make new object
       const eventsObj = await this.makeEventsObj(dataArr)
-
-    // update the state with new object
+     //update the state with new object
       this.setState({
         eventsData: eventsObj
       })
-
     } catch(error) {
       console.log(error);
     }
@@ -144,116 +120,34 @@ class App extends Component {
         end_time: end_time,
         description: description,
         day_id: this.state.currentDayId // day_id keeps track of current day
-      }
+      } // send input form values to database
 
       if (this.state.showForm) {
         this.onClose() // close event form
         getEvents = await axios.post('http://localhost:3001/events', postObj)
+        // Only make one (post) request to the db & get back response data (instead of making a post & get request)
+        // otherwise making two requests to db will slow down performance, send events in response object for individual day only, instead of data
+        // for the whole year or whole month, so performance is more optimal
       } else if (this.state.showEditForm) {
         this.onClose() // close event form
         const id = this.state.currentEditId
         getEvents = await axios.put('http://localhost:3001/events/'+id, postObj)
       }
 
-
-      //getEvents = await axios.get('http://localhost:3001/events/'+current_day)
-
       this.setState(prevState => ({
         eventsData: {
-          ...prevState.eventsData,
+          ...prevState.eventsData, // to not over-ride other day events
           [this.state.currentDayId]: getEvents.data.event
         },
-        currentDayId: null,
+        currentDayId: null, // to prevent bugs
         currentEditId: null
       }))
-
 
     } catch(error) {
         console.log(error)
       } // end try catch block
 
   } // end function
-
-
-// to handle submit form
- /*async handleEditSubmit(start_time, end_time, description) {
-  try  {
-    let current_day = this.state.currentDayId
-
-    // hide input form
-    this.setState({
-      showEditForm: false
-    })
-
-    var post = {
-    start_time: start_time,
-    end_time: end_time,
-    description: description
-    day_id: this.state.currentDayId // day_id keeps track of current day
-  }
-
-    // post info to database
-    let id = this.state.currentEditId
-    let getEvents = await axios.put('http://localhost:3001/events/'+id, post)
-
-
-} catch(error) {
-    console.log(error)
-  }
-} // end edit function*/
-
-
-// to handle submit form
- /*async handleSubmit(start_time, end_time, description) {
-  try  {
-
-    let current_day = this.state.currentDayId
-
-    // hide input form
-    this.setState({
-      showForm: false
-    })
-
-    // post info to database
-    let getEvents = await axios.post('http://localhost:3001/events', {
-    start_time: start_time,
-    end_time: end_time,
-    description: description,
-    day_id: this.state.currentDayId // day_id keeps track of current day
-  })
-
-
-// Setting the state of eventsData with updated info from form. Adding new event to state.
-// if the current_day id doesn't exist, just add one event to state.
-    if (!this.state.eventsData[current_day]) {
-        this.setState(prevState => ({
-          eventsData: {
-            ...prevState.eventsData, // keep all info of events intact
-            // only update day_id objects
-            [this.state.currentDayId]: [{ start_time: start_time, end_time: end_time,
-          description: description, day_id: current_day}]
-          }
-        }))
-
-
-    } else {
-      // if day_id exists, get all event info from database to reflect new
-      // event that was just added
-      let getEvents = await axios.get('http://localhost:3001/events/'+current_day);
-      this.setState(prevState => ({
-        eventsData: {
-          ...prevState.eventsData,
-          [this.state.currentDayId]: getEvents.data.event
-        }
-      }))
-    } // end if-else statement
-
-  } catch (error) {
-        console.log(error);
-      }
-
-} // end handle-submit function*/
-
 
 
   render() {
@@ -268,17 +162,13 @@ class App extends Component {
         handleMonthClick={this.handleMonthClick}
         />
 
-        <Editform
-        editForm={this.state.showEditForm}
-        onClose={this.closeEditForm}
-        handleSubmitForm={this.handleSubmitForm}
-        editEvent={this.state.editEvent}
-        />
 
         <Inputform
         showForm={this.state.showForm}
+        showEditForm={this.state.showEditForm}
         onClose={this.onClose}
         handleSubmitForm={this.handleSubmitForm}
+        editEventDescription={this.state.editEventDescription}
         />
       </div>
     );
@@ -286,5 +176,8 @@ class App extends Component {
 }
 
 export default App;
+
+
+
 
 

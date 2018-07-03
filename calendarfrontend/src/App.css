@@ -39,6 +39,12 @@ label {
   border-color: #7584b7;
 }
 
+.arrowBtn {
+  font-size: 30px;
+  margin: 10px;
+}
+
+
 .day {
   font-family: Arial;
   height: 150px;
@@ -69,7 +75,6 @@ margin-bottom: 3px;
   padding: 2px;
 
 }
-
 
 .modal {
   display: flex;
