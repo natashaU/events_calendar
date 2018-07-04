@@ -1,7 +1,11 @@
 # Events Calendar in React & Node 
 
 Save events to your Monthly Calendar. User is able to make a get, post, update & delete request
-to the database. More features and Heroku deployment coming soon! :neckbeard:
+to the database. More features coming soon! :neckbeard:
+
+## Heroku Deployment
+Check out the live application here:
+[Click me to play with the calendar!](https://natasha-calendar.herokuapp.com/)
 
 ## Technologies used:
 
