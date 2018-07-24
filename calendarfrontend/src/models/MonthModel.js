@@ -12,9 +12,9 @@ class MonthModel {
 
     // For any `startDate` find the first day of its month
     const monthStart = new Date(
-      startDate.getFullYear(),
-      startDate.getMonth(),
-      1, // get 1st day of the month
+      startDate.getFullYear(), // ex 2018
+      startDate.getMonth(),  // ex '6' for july
+      1, // get 1st day of the month ex (time stamp)
     );
 
     // Building up a month model means knowing when to stop
@@ -42,7 +42,7 @@ class MonthModel {
       // If the day of the week of 1 June is Friday, `getDay` will return `5`. Setting the
       // date to the negavtive 5th, plus 1 (date rollover starts at 1), the negative 4th day
       // of June will roll the day backward to 27 May
-      -monthStart.getDay() + 1,
+      -monthStart.getDay() + 1, // (get day is day of week 0-6 s-sat)
     );
 
     // Prepare to build model for each week in the month
@@ -69,7 +69,7 @@ class MonthModel {
       const weekNext = new Date(
         weekStart.getFullYear(),
         weekStart.getMonth(),
-        weekStart.getDate() + 7,
+        weekStart.getDate() + 7, // ex july 1 = 1, july 5 = 5,
       );
 
       // Prepare to build model for each day in week
@@ -86,7 +86,7 @@ class MonthModel {
         )
       ) {
         // Make a copy of this iteration's start date
-        const dayStart = new Date(dayCurrent.valueOf());
+        const dayStart = new Date(dayCurrent.valueOf()); //value of makes copy
         // Make a value for the next day. This is useful to know if an event
         // falls within this day's bounderies
         const dayNext = new Date(
